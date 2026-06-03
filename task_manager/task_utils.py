@@ -1,20 +1,17 @@
-# assignment: task utility functions
-# description: helper functions to add, view, and complete tasks
+# lab assignment: task utility functions
+# details: functions to add, complete, view, and track tasks
 
+from datetime import datetime
 from task_manager.validation import validate_task_title, validate_task_description, validate_due_date
 
-# Define tasks list
+# start with an empty tasks list
 tasks = []
 
-# Implement add_task function
+# function to add a new task
 def add_task(title, description, due_date):
-    # check everything first
-    check1 = validate_task_title(title)
-    check2 = validate_task_description(description)
-    check3 = validate_due_date(due_date)
-
-    if check1 == True and check2 == True and check3 == True:
-        # build the task map structure
+    # run all validation checks first
+    if validate_task_title(title) and validate_task_description(description) and validate_due_date(due_date):
+        # make the dictionary for the task
         new_task = {
             "title": title,
             "description": description,
@@ -24,40 +21,39 @@ def add_task(title, description, due_date):
         tasks.append(new_task)
         print("Task added successfully!")
         return True
-    else:
-        print("Validation failed.")
-        return False
+    return False
 
-# Implement mark_task_as_complete function
+# function to change a task to completed
 def mark_task_as_complete(index, tasks=tasks):
-    # check if they typed digits before converting
-    if str(index).isdigit():
+    # catch any number errors simply
+    try:
         number_choice = int(index)
-
-        # check if the number choice is inside our list size
+        # make sure number fits inside the list
         if number_choice >= 0 and number_choice < len(tasks):
             tasks[number_choice]["completed"] = True
             print("Task marked as complete!")
             return True
         else:
-            print("Invalid index choice.")
+            print("Invalid choice. Please try again.")
             return False
-    else:
-        print("Error: Please enter a valid number, not text.")
+    except ValueError:
+        print("Invalid choice. Please try again.")
         return False
 
-
-# Implement view_pending_tasks function
+# function to display pending tasks
 def view_pending_tasks(tasks=tasks):
-    print("Pending Tasks:")
+    # check if there are any uncompleted tasks
+    pending_exists = False
+    for single_task in tasks:
+        if single_task["completed"] == False:
+            pending_exists = True
 
-
-      # check if the list has nothing inside
-    if len(tasks) == 0:
-        print("No task found.")
+    # if none are found print the error
+    if pending_exists == False:
+        print("No working currently")
         return
 
-    # simple counting loop
+    print("Pending Tasks:")
     counter = 0
     for single_task in tasks:
         if single_task["completed"] == False:
@@ -67,16 +63,16 @@ def view_pending_tasks(tasks=tasks):
             print("---")
         counter = counter + 1
 
-# Implement calculate_progress function
+# function to calculate current progress percentage
 def calculate_progress(tasks=tasks):
     total = len(tasks)
-
+    # print message if list is empty
     if total == 0:
+        print("No working currently")
         progress = 0.0
-        print("Current progress:", progress, "%")
         return progress
 
-    # count completed tasks manually
+    # count tasks that are done
     done_count = 0
     for single_task in tasks:
         if single_task["completed"] == True:

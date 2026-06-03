@@ -1,30 +1,35 @@
+# lab assignment: input validation functions
+# details: checks text lengths and date formats
+
 from datetime import datetime
 
+# function to check task title
 def validate_task_title(title):
-    # check if title has text
-    if isinstance(title, str) and len(title.strip()) > 0:
-        return True
-    print("Error: Task title cannot be empty.")
-    return False
+    # make sure title is not empty
+    if title is None or len(title.strip()) == 0:
+        print("Invalid choice. Please try again.")
+        return False
+    return True
 
+# function to check task description
 def validate_task_description(description):
-    # check if description has text
-    if isinstance(description, str) and len(description.strip()) > 0:
-        return True
-    print("Error: Task description cannot be empty.")
-    return False
+    # make sure description is not empty
+    if description is None or len(description.strip()) == 0:
+        print("Invalid choice. Please try again.")
+        return False
+    return True
 
+# function to check due date
 def validate_due_date(due_date):
-    # check if empty first
-    if not isinstance(due_date, str) or len(due_date.strip()) == 0:
-        print("Error: Due date cannot be empty.")
+    # make sure date is not empty
+    if due_date is None or len(due_date.strip()) == 0:
+        print("Invalid choice. Please try again.")
         return False
 
-    # check if it is a real date layout
+    # check for format errors using try except
     try:
         datetime.strptime(due_date.strip(), "%Y-%m-%d")
         return True
     except ValueError:
-        print("Error: Due date must be a valid date in YYYY-MM-DD format.")
+        print("Invalid choice. Please try again.")
         return False
-
