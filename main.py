@@ -1,7 +1,13 @@
 # Import all the needed functions from our package
-from task_manager.validation import validate_task_title, validate_task_description, validate_due_date
+try:
+    from task_manager.task_utils import add_task, mark_task_as_complete, view_pending_tasks, calculate_progress
+except ModuleNotFoundError:
+        from task_utils import add_task, mark_task_as_complete, view_pending_tasks, calculate_progress
 
 import time
+
+
+
 
 def main():
     while True:

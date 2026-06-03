@@ -1,8 +1,9 @@
 # lab assignment: task utility functions
 # details: functions to add, complete, view, and track tasks
-
-from datetime import datetime
-from task_manager.validation import validate_task_title, validate_task_description, validate_due_date
+try:
+    from task_manager.validation import validate_task_title, validate_task_description, validate_due_date
+except ModuleNotFoundError:
+    from validation import validate_task_title, validate_task_description, validate_due_date
 
 # start with an empty tasks list
 tasks = []
