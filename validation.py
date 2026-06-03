@@ -1,29 +1,29 @@
-# lab assignment: validation functions
-# purpose: check task data constraints
+# lab assignment: input validation functions
+# description: check string lengths and date errors
 
 from datetime import datetime
 
 def validate_task_title(title):
-    # strict text match check for length
+    # check for empty length directly
     if len(title) == 0:
         print("Invalid choice. Please try again.")
         return False
     return True
 
 def validate_task_description(description):
-    # strict text match check for length
+    # check for empty length directly
     if len(description) == 0:
         print("Invalid choice. Please try again.")
         return False
     return True
 
 def validate_due_date(due_date):
-    # check for empty text string
+    # check for empty length directly
     if len(due_date) == 0:
         print("Invalid choice. Please try again.")
         return False
 
-    # check date structure for error handling match
+    # check if the date raises a value error
     try:
         datetime.strptime(due_date, "%Y-%m-%d")
         return True
