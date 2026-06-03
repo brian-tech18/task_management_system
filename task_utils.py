@@ -28,7 +28,8 @@ def add_task(title, description, due_date):
 def mark_task_as_complete(index, tasks=tasks):
     # catch any number errors simply
     try:
-        number_choice = int(index)
+     # fix index because list starts at zero
+        number_choice = int(index) - 1
         # make sure number fits inside the list
         if number_choice >= 0 and number_choice < len(tasks):
             tasks[number_choice]["completed"] = True
@@ -58,7 +59,8 @@ def view_pending_tasks(tasks=tasks):
     counter = 0
     for single_task in tasks:
         if single_task["completed"] == False:
-            print("Index:", counter)
+            # print counter + 1 so the first task shows up as Index: 1
+            print("Index:", counter + 1)
             print("Title:", single_task["title"])
             print("Due Date:", single_task["due_date"])
             print("---")
@@ -81,5 +83,4 @@ def calculate_progress(tasks=tasks):
 
     # basic percentage calculation
     progress = (done_count / total) * 100
-    print("Current progress:", progress, "%")
     return progress
